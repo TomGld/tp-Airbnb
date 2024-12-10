@@ -81,7 +81,7 @@ final class App
 
             // -- Accommodation --
             // Ajout
-            $router->get( '/accommodations/add', [ AdminController::class, 'add' ] );
+            $router->get( '/accommodations/add', [ AccommodationController::class, 'add' ] );
             $router->post( '/accommodations', [ AdminController::class, 'create' ] );
             // Liste
             $router->get( '/accommodations', [ AdminController::class, 'index' ]);

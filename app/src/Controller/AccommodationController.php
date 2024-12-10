@@ -17,11 +17,11 @@ class AccommodationController extends Controller
     // Admin: Affichage du formulaire de création d'un utilisateur
     public function add(): void
     {
-        $view = new View( 'Accommodation:announcer:create' );
+        $view = new View( 'accommodation:announcer:create' );
 
         $data = [
             'title' => 'Ajouter un bien',
-            'types' => RepoManager::getRM()->getAccommodationRepo()->getAll()
+            'accommodation' => RepoManager::getRM()->getAccommodationRepo()->getAll()
         ];
 
         $view->render( $data );
@@ -51,11 +51,11 @@ class AccommodationController extends Controller
     // Admin: Liste
     public function index(): void
     {
-        $view = new View( 'car:admin:list' );
+        $view = new View( 'accommodation:announcer:list' );
 
         $data = [
             'title' => 'Liste des voitures',
-            'cars' => RepoManager::getRM()->getCarRepo()->getAll()
+            'accommodation' => RepoManager::getRM()->getAccommodationRepo()->getAll()
         ];
 
         $view->render( $data );
