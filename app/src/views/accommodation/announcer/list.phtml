@@ -1,14 +1,17 @@
 <div>
-    <a href="/admin">🏠 Retour</a>
+    <a href="/announcer">🏠 Retour</a>
 </div>
-<h1>Voitures</h1>
+<h1>Annonces</h1>
 <p>
-    <a href="/accommodation/announcer/add">Ajouter une annonce</a>
+    List.phtml "views/accommodation/announcer"
 </p>
-<?php if( !empty($cars) ): ?>
+<p>
+    <a href="/announcer/accommodations/add">Ajouter une annonce</a>
+</p>
+<?php if( !empty($accommodation) ): ?>
 <ul>
-    <?php foreach( $cars as $car ): ?>
-        <li><?php printf( '<a href="/admin/cars/%1$s">%1$s - %2$s</a>', $car->getId(), $car->getLabel() ) ?></li>
+    <?php foreach( $accommodations as $accommodation ): ?>
+        <li><?php printf( '<a href="/announcer/accommodations/%1$s">%1$s - %2$s</a>', $accommodation->getId(), $accommodation->getLabel() ) ?></li>
     <?php endforeach ?>
 </ul>
 <?php else: ?>

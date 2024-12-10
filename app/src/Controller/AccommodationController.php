@@ -18,12 +18,13 @@ class AccommodationController extends Controller
     public function add(): void
     {
         $view = new View( 'accommodation:announcer:create' );
+        $accommodation_types = RepoManager::getRM()->getAccommodationTypeRepo()->getAll();
 
         $data = [
             'title' => 'Ajouter un bien',
-            'accommodation' => RepoManager::getRM()->getAccommodationRepo()->getAll()
+            'accommodation_types' => $accommodation_types
         ];
-
+        
         $view->render( $data );
     }
 

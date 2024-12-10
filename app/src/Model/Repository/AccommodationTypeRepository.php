@@ -44,7 +44,7 @@ class AccommodationTypeRepository extends Repository
     /* cRud: Read tous les items */
     public function getAll(): array
     {
-        return $this->readAll( AccommodationTypeRepository::class );
+        return $this->readAll( AccommodationType::class );
     }
 
     /* cRud: Read un item par son id */

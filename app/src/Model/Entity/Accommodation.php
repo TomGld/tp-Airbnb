@@ -227,7 +227,7 @@ class Accommodation extends Entity
 
 
 
-//ANCIENS
+
 
     // Liaisons
     protected array $categories;
