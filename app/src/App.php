@@ -82,14 +82,14 @@ final class App
             // -- Accommodation --
             // Ajout
             $router->get( '/accommodations/add', [ AccommodationController::class, 'add' ] );
-            $router->post( '/accommodations', [ AdminController::class, 'create' ] );
+            $router->post( '/accommodations', [ AccommodationController::class, 'create' ] );
             // Liste
             $router->get( '/accommodations', [ AccommodationController::class, 'index' ]);
             // Détail
-            $router->get( '/accommodations/{id}', [ AdminController::class, 'show' ] );
-            $router->post( '/accommodations/{id}', [ AdminController::class, 'update' ] );
+            $router->get( '/accommodations/{id}', [ AccommodationController::class, 'show' ] );
+            $router->post( '/accommodations/{id}', [ AccommodationController::class, 'update' ] );
             // Suppression
-            $router->get( '/accommodations/{id}/delete', [ AdminController::class, 'delete' ] );
+            $router->get( '/accommodations/{id}/delete', [ AccommodationController::class, 'delete' ] );
         });
 
 
