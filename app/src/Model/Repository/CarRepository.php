@@ -108,7 +108,7 @@ class CarRepository extends Repository
         // On supprime d'abord toutes les liaisons avec les catégories
         $success = RepoManager::getRM()->getCategoryRepo()->detachAllForCar( $id );
 
-        // Si cela a fonctionné on invoke la méthode deleteOne parente
+        // Si cela a fonctionné on invoque la méthode deleteOne parente
         if( $success) {
             $success = parent::deleteOne( $id );
         }

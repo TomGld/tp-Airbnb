@@ -6,6 +6,7 @@
 // Déclaration du namespace de ce fichier
 namespace App;
 
+use App\Controller\AccommodationController;
 use Exception;
 use Throwable;
 
@@ -66,6 +67,32 @@ final class App
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
         
         // TODO: Groupe Visiteurs (non-connectés)
+
+
+        // -- PAGES ANNOUNCERS --
+        $announcerAttributes = [
+            Attributes::PREFIX => '/announcer',
+            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
+        ];
+
+        $this->router->group( $announcerAttributes, function( Router $router ) {
+            // -- Pages d'annonceur --
+            $router->get( '', [ AccommodationController::class, 'index' ]);
+
+            // -- Accommodation --
+            // Ajout
+            $router->get( '/accommodations/add', [ AdminController::class, 'add' ] );
+            $router->post( '/accommodations', [ AdminController::class, 'create' ] );
+            // Liste
+            $router->get( '/accommodations', [ AdminController::class, 'index' ]);
+            // Détail
+            $router->get( '/accommodations/{id}', [ AdminController::class, 'show' ] );
+            $router->post( '/accommodations/{id}', [ AdminController::class, 'update' ] );
+            // Suppression
+            $router->get( '/accommodations/{id}/delete', [ AdminController::class, 'delete' ] );
+        });
+
+
 
         // -- Pages d'admin --
         $adminAttributes = [

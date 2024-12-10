@@ -6,9 +6,9 @@ use App\Model\Repository\CategoryRepository;
 use App\Model\Repository\RepoManager;
 use Symplefony\Model\Entity;
 
-class accommodation extends Entity
+class Accommodation extends Entity
 {
-    //function avec ses getters and setters :
+    //functions avec ses getter and setter :
 
     protected string $title ;
 
@@ -227,7 +227,7 @@ class accommodation extends Entity
 
 
 
-
+//ANCIENS
 
     // Liaisons
     protected array $categories;

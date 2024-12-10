@@ -1,0 +1,76 @@
+<div>
+    <a href="/admin/list">🔙 Retour</a>
+</div>
+<h1>Ajouter un nouvel hébergement</h1>
+<form action="/admin/cars" method="post" novalidate>
+    <div>
+        <label for="input-title">Titre :</label>
+        <input type="text" name="title" id="input-title">
+    </div>
+    <div>
+        <label for="input-price">Prix :</label>
+        <input type="number" name="price" id="input-price">
+    </div>
+    <div>
+        <label for="input-surface">Surface en mètre carré :</label>
+        <input type="text" name="surface" id="input-surface">
+    </div>
+    <div>
+        <label for="input-description">Description du bien:</label>
+        <input type="number" name="description" id="input-description">
+    </div>
+    <div>
+        <label for="input-capacity">Capacité du bien en personne :</label>
+        <input type="number" name="capacity" id="input-dapacity">
+    </div>
+    
+    <div>
+        <label for="select-id_type">Type de bien :</label>
+        <select name="id_type" id="select-id_type">
+            <option value="">Choisissez...</option>
+            <!-- TODO: La boucle qui remonte les vraies types de bien-->
+            <option value="1">Essence</option>
+        </select>
+    </div>
+
+<!-- Insérer une liste déroulante pour sélectionner 1 seule choix récupéré depuis la table "accommodation_types" -->
+    <div>
+        <label for="select-id_type">Type de bien :</label>
+        <select name="id_type" id="select-id_type">
+            <option value="">Choisissez...</option>
+            <!-- Insertion des éléments des équipements -->
+            <?php foreach ($types as $type) : ?>
+                <option value="<?= $type->getId() ?>"><?= $type->getLabel() ?></option>
+            <?php endforeach; ?>
+ 
+
+
+
+    <div>
+        <input type="submit" value="Ajouter">
+    </div>
+</form>
+
+
+        <!-- TODO: Faire la liste déroulante pour choisir le type de biens depuis la bdd
+
+            <div>
+        <label for="select-energy">Motorisation :</label>
+        <select name="energy" id="select-energy">
+            <option value="">Choisissez...</option>
+            TODO: La boucle qui remonte les vraies motorisations
+            <option value="1">Essence</option>
+        </select>
+
+
+    </div>
+
+
+TODO: BONUS Si l'on veut rajouter des images :
+         
+        <div>
+        <label for="input-image">Image :</label>
+        TODO: Gérer l'upload d'image avec un input de type "file"
+        <input type="text" name="image" id="input-image">
+    </div>
+        -->

@@ -21,6 +21,13 @@ class RepoManager
     private AddressRepository $address_repository;
     public function getAddressRepo(): AddressRepository { return $this->address_repository; }
 
+    private AccommodationRepository $accommodation_repository;
+    public function getAccommodationRepo(): AccommodationRepository { return $this->accommodation_repository;}
+
+    private AccommodationTypeRepository $accommodationType_repository;
+    public function getAccommodationTypeRepo(): AccommodationTypeRepository { return $this->accommodationType_repository;}
+
+
     private function __construct()
     {
         $pdo = Database::getPDO();
@@ -29,5 +36,8 @@ class RepoManager
         $this->category_repository = new CategoryRepository( $pdo );
         $this->car_repository = new CarRepository( $pdo );
         $this->address_repository = new AddressRepository( $pdo );
+        $this->accommodation_repository = new AccommodationRepository( $pdo );
+        $this->accommodationType_repository = new AccommodationTypeRepository( $pdo );
+
     }
 }
