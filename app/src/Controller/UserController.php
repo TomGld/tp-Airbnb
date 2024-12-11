@@ -31,7 +31,8 @@ class UserController extends Controller
     // Visiteur: Traitement du formulaire de création de compte
     public function processSubscribe(): void
     {
-        // TODO: :)
+        // TODO: AJOUTER LE TRAITEMENT DU FORMULAIRE DEPUIS LE JS
+        
     }
 
     /**
@@ -41,7 +42,7 @@ class UserController extends Controller
     // Admin: Affichage du formulaire de création d'un utilisateur
     public function add(): void
     {
-        $view = new View( 'user:admin:create' );
+        $view = new View( 'user:create_account' );
 
         $data = [
             'title' => 'Ajouter un utilisateur'
@@ -54,28 +55,24 @@ class UserController extends Controller
     public function create( ServerRequest $request ): void
     {
         $user_data = $request->getParsedBody();
+        
 
-        $address = new Address( $user_data );
-
-        $address_created = RepoManager::getRM()->getAddressRepo()->create( $address );
-
-        if( is_null( $address_created ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/admin/users/add' );
-        }
-
-        $user = new User( $user_data );
-        $user->setAddressId( $address_created->getId() );
-        $user->setAddress( $address_created );
+        $user = [
+            'email' => $user_data['email'],
+            'password' => password_hash( $user_data['password'], PASSWORD_BCRYPT ),
+            'lastname' => $user_data['lastname'],
+            'firstname' => $user_data['firstname'],
+            'phone_number' => $user_data['phone_number'],
+        ];
 
         $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
 
         if( is_null( $user_created ) ) {
             // TODO: gérer une erreur
-            $this->redirect( '/admin/users/add' );
+            $this->redirect( '/users/add' );
         }
 
-        $this->redirect( '/admin/users' );
+        $this->redirect( '/users' );
     }
 
     // Admin: Liste
@@ -123,17 +120,6 @@ class UserController extends Controller
         $user_updated = RepoManager::getRM()->getUserRepo()->update( $user );
 
         if( is_null( $user_updated ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/admin/users/'. $id );
-        }
-
-        // Update de l'addresse
-        $address = new Address( $user_data );
-        $address->setId( $user_updated->getAddressId() );
-
-        $address_updated = RepoManager::getRM()->getAddressRepo()->update( $address );
-
-        if( is_null( $address_updated ) ) {
             // TODO: gérer une erreur
             $this->redirect( '/admin/users/'. $id );
         }

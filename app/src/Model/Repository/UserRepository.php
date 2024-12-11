@@ -11,12 +11,12 @@ class UserRepository extends Repository
     protected function getTableName(): string { return 'users'; }
 
     /* Crud: Create */
-    public function create( User $user ): ?User
+    public function create( array $user ): ?User
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`password`,`email`,`firstname`,`lastname`,`phone_number`,`address_id`) 
-                VALUES (:password,:email,:firstname,:lastname,:phone_number,:address_id)',
+                (`email`,`password`,`lastname`,`firstname`,`phone_number`) 
+                VALUES (:email,:password,:lastname,:firstname,:phone_number)',
             $this->getTableName()
         );
 
@@ -27,14 +27,7 @@ class UserRepository extends Repository
             return null;
         }
 
-        $success = $sth->execute([
-            'password' => $user->getPassword(),
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhoneNumber(),
-            'address_id' => $user->getAddressId()
-        ]);
+        $success = $sth->execute($user);
 
         // Si echec de l'insertion
         if( ! $success ) {
@@ -42,9 +35,7 @@ class UserRepository extends Repository
         }
 
         // Ajout de l'id de l'item créé en base de données
-        $user->setId( $this->pdo->lastInsertId() );
-
-        return $user;
+        return $this->getById( (int) $this->pdo->lastInsertId() );
     }
 
     /* cRud: Read tous les items */

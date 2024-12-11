@@ -33,7 +33,7 @@ class User extends Entity
 
     protected string $lastname;
     public function getLastname(): string { return $this->lastname; }
-    public function setLastname( int $value ): self
+    public function setLastname( string $value ): self
     {
         $this->lastname = $value;
         return $this;
@@ -41,34 +41,10 @@ class User extends Entity
 
     protected string $phone_number;
     public function getPhoneNumber(): string { return $this->phone_number; }
-    public function setPhoneNumber( int $value ): self
+    public function setPhoneNumber( string $value ): self
     {
         $this->phone_number = $value;
         return $this;
     }
 
-    protected string $address_id;
-    public function getAddressId(): string { return $this->address_id; }
-    public function setAddressId( int $value ): self
-    {
-        $this->address_id = $value;
-        return $this;
-    }
-
-    // Liaisons
-    protected Address $address;
-    public function getAddress(): Address
-    {
-        if( ! isset( $this->address ) ) {
-            $this->address = RepoManager::getRM()->getAddressRepo()->getById( $this->address_id );
-        }
-
-        return $this->address;
-    }
-    
-    public function setAddress( Address $address ): self
-    {
-        $this->address = $address;
-        return $this;
-    }
 }

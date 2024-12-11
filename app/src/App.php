@@ -65,6 +65,9 @@ final class App
         // -- Pages communes --
         $this->router->get( '/', [ PageController::class, 'index' ] );
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
+
+        $this->router->get( '/add', [ UserController::class, 'add' ] );
+        $this->router->post( '/users/add', [ UserController::class, 'create' ] );
         
         // TODO: Groupe Visiteurs (non-connectés)
 
@@ -90,9 +93,21 @@ final class App
             $router->post( '/accommodations/{id}', [ AccommodationController::class, 'update' ] );
             // Suppression
             $router->get( '/accommodations/{id}/delete', [ AccommodationController::class, 'delete' ] );
+
         });
 
+            // -- Pages USERS --
+            $userAttributes = [
+                Attributes::PREFIX => '/users',
+                Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
+            ];
+            $this->router->group( $userAttributes, function( Router $router ) {
 
+                // -- USER --
+                
+                // Ajout
+                
+            });
 
         // -- Pages d'admin --
         $adminAttributes = [

@@ -1,19 +1,34 @@
 <div>
     <a href="/announcer">🏠 Retour</a>
 </div>
-<h1>Annonces</h1>
+<h1>Vos annonces :</h1>
 <p>
     List.phtml "views/accommodation/announcer"
 </p>
 <p>
     <a href="/announcer/accommodations/add">Ajouter une annonce</a>
 </p>
-<?php if( !empty($accommodation) ): ?>
-<ul>
-    <?php foreach( $accommodations as $accommodation ): ?>
-        <li><?php printf( '<a href="/announcer/accommodations/%1$s">%1$s - %2$s</a>', $accommodation->getId(), $accommodation->getLabel() ) ?></li>
-    <?php endforeach ?>
-</ul>
+<div>
+    <?php if (!empty($accommodations)) : ?>
+        <ul>
+            <?php foreach ($accommodations as $accommodation): ?>
+                <li>
+                    <ul>
+                        <li>id : <?php echo $accommodation->getId() ?></li>
+                        <li>titre : <?php echo $accommodation->getTitle() ?></li>
+                        <li>prix : <?php echo $accommodation->getPrice() ?></li>
+                        <li>Surface : <?php echo $accommodation->getSurface() ?></li>
+                        <li>Description : <?php echo $accommodation->getDescription() ?></li>
+                        <li>Capacité : <?php echo $accommodation->getCapacity() ?></li>
+                        <li>Propriétaire : <?php echo $accommodation->getId_owner() ?></li>
+                        <li>Type de bien : <?php echo $accommodation->getId_Type() ?></li>                        
+                        <li>Adresse : <?php echo $accommodation->getId_address() ?></li>
+                    </ul>
+                </li>
+            <?php endforeach ?>
+        </ul>
+</div>
 <?php else: ?>
-    <div>Vous n'avez aucune annonce enregistrée.</div>
+    <div>Aucune location enregistrée</div>
 <?php endif ?>
+

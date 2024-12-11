@@ -105,17 +105,5 @@ class AccommodationRepository extends Repository
         return $accommodation;
     }
 
-    /* cruD: Delete */
-    public function deleteOne(int $id): bool
-    {
-        // On supprime d'abord toutes les liaisons avec les catégories
-        $success = RepoManager::getRM()->getCategoryRepo()->detachAllForCar( $id );
 
-        // Si cela a fonctionné on invoke la méthode deleteOne parente
-        if( $success) {
-            $success = parent::deleteOne( $id );
-        }
-
-        return $success;
-    }
 }

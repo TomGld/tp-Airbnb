@@ -120,49 +120,7 @@ class CategoryRepository extends Repository
         return $category;
     }
 
-    /* Delete toutes les liaisons de catégories d'une voiture donnée */
-    public function detachAllForCar( int $id ): bool
-    {
-        $query = sprintf(
-            'DELETE FROM `%s` WHERE car_id=:id',
-            $this->getMappingCar()
-        );
 
-        $sth = $this->pdo->prepare( $query );
 
-        // Si la préparation échoue
-        if( ! $sth ) {
-            return false;
-        }
 
-        $success = $sth->execute([ 'id' => $id ]);
-
-        return $success;
-    }
-
-    /* Insére les liaisons de catégories demandée pour d'une voiture donnée */
-    public function attachForCar( array $ids_categories, int $car_id ): bool
-    {
-        $query_values = [];
-        foreach( $ids_categories as $category_id ) {
-            $query_values[] = sprintf( '( %s,%s )', $category_id, $car_id );
-        }
-
-        $query = sprintf(
-            'INSERT INTO `%s` 
-                (`category_id`, `car_id`) 
-                VALUES %s',
-            $this->getMappingCar(),
-            implode( ',', $query_values )
-        );
-
-        $sth = $this->pdo->prepare( $query );
-
-        // Si la préparation échoue
-        if( ! $sth ) {
-            return false;
-        }
-
-        return $sth->execute();
-    }
 }
