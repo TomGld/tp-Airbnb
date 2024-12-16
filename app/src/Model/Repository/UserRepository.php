@@ -49,44 +49,6 @@ class UserRepository extends Repository
         return $this->readById( User::class, $id );
     }
 
-    /* crUd: Update */
-    public function update( User $user ): ?User
-    {
-        $query = sprintf(
-            'UPDATE `%s` 
-                SET
-                    `password`=:password,
-                    `email`=:email,
-                    `firstname`=:firstname,
-                    `lastname`=:lastname,
-                    `phone_number`=:phone_number
-                WHERE id=:id',
-            $this->getTableName()
-        );
-
-        $sth = $this->pdo->prepare( $query );
-
-        // Si la préparation échoue
-        if( ! $sth ) {
-            return null;
-        }
-
-        $success = $sth->execute([
-            'password' => $user->getPassword(),
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhoneNumber(),
-            'id' => $user->getId()
-        ]);
-
-        // Si echec de la mise à jour
-        if( ! $success ) {
-            return null;
-        }
-
-        return $user;
-    }
 
     /* cruD: Delete */
     public function deleteOne(int $id): bool
@@ -115,5 +77,38 @@ class UserRepository extends Repository
         }
 
         return $success;
+    }
+
+
+    /**
+     * Valide les données d'authentification
+     *
+     * @param  string $email Email de l'utilisateur
+     * @param  string $password Mot de passe de l'utilisateur
+     * 
+     * @return mixed User | null en cas d'échec
+     */
+    public function checkAuth(string $email, string $password): ?User
+    {
+        $query = sprintf(
+            'SELECT * FROM `%s` WHERE `email`=:email AND `password`=:password',
+            $this->getTableName()
+        );
+
+        $sth = $this->pdo->prepare($query);
+
+        if (! $sth) {
+            return null;
+        }
+
+        $sth->execute(['email' => $email, 'password' => $password]);
+
+        $user_data = $sth->fetch();
+
+        if (! $user_data) {
+            return null;
+        }
+
+        return new User($user_data);
     }
 }

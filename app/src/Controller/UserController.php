@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\App;
 use Laminas\Diactoros\ServerRequest;
 
 use Symplefony\Controller;
@@ -15,41 +16,36 @@ use App\Model\tools\FunctionsSecurity;
 class UserController extends Controller
 {
 
-    // Visiteur: Traitement du formulaire de création de compte
-    public function processSubscribe(): void
-    {
-        // TODO: AJOUTER LE TRAITEMENT DU FORMULAIRE DEPUIS LE JS
-        
-    }
-
-    /**
-     * Pages Administrateur
-     */
-
-    // Admin: Affichage du formulaire de création d'un utilisateur
+    // Visiteur: Affichage du formulaire de création de compte
     public function add(): void
     {
-        $view = new View( 'user:create_account' );
+        $view = new View('user:create_account', auth_controller: AuthController::class);
 
         $data = [
-            'title' => 'Ajouter un utilisateur'
+            'title' => 'Créer mon compte - Autodingo.com'
         ];
 
-        $view->render( $data );
+        $view->render($data);
     }
+
+
 
     // Visiteur: Traitement du formulaire de création d'un utilisateur
     public function create( ServerRequest $request ): void
     {
         $user_data = $request->getParsedBody();
-        
-        //Vérification format email avec validEmail
-        // TODO: if
 
+        $isValidPassword = FunctionsSecurity::validPassword($user_data['password']);
+        $isvalidEmail = FunctionsSecurity::validEmail($user_data['email']);
+
+        if(!$isValidPassword)
+        {
+            //TODO: traiter l'erreur
+        }    
 
         $user = [
-            'email' => FunctionsSecurity::secureData($user_data['email']),
-            'password' => password_hash(FunctionsSecurity::validPassword($user_data['password']), PASSWORD_BCRYPT ),
+            'email' => ($user_data['email']),
+            'password' => App::strHash($user_data['password']),
             'lastname' => FunctionsSecurity::secureData($user_data['lastname']),
             'firstname' => FunctionsSecurity::secureData($user_data['firstname']),
             'phone_number' => FunctionsSecurity::secureData($user_data['phone_number']),
@@ -59,10 +55,10 @@ class UserController extends Controller
 
         if( is_null( $user_created ) ) {
             // TODO: gérer une erreur
-            $this->redirect( '/users/add' );
+            $this->redirect( '/sign-up/add' );
         }
 
-        $this->redirect( '/users' );
+        $this->redirect( '/sign-in?msg=Compte crée avec succès' );
     }
 
     // Admin: Liste
@@ -99,23 +95,6 @@ class UserController extends Controller
         $view->render( $data );
     }
 
-    // Admin: Traitement du formulaire de modification
-    public function update( ServerRequest $request, int $id ): void
-    {
-        $user_data = $request->getParsedBody();
-
-        $user = new User( $user_data );
-        $user->setId( $id );
-
-        $user_updated = RepoManager::getRM()->getUserRepo()->update( $user );
-
-        if( is_null( $user_updated ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/admin/users/'. $id );
-        }
-
-        $this->redirect( '/admin/users' );
-    }
 
     // Admin: Suppression
     public function delete( int $id ): void

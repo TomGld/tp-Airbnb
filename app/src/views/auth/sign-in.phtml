@@ -1,0 +1,29 @@
+
+<body>
+    <h1>Airbnb</h1>
+    <?php 
+    if (isset($_GET['msg'])): ?>
+    <div>
+        <?php
+        echo $_GET['msg'];
+        ?>
+    </div>
+    <?php
+    endif;
+    ?>
+    <form action="/sign-in" method="post" novalidate>
+        <div>
+            <label for="input-email">Email :</label>
+            <input type="email" name="email" id="input-email">
+        </div>
+        <div>
+            <label for="input-password">Mot de passe :</label>
+            <input type="password" name="password" id="input-password">
+        </div>
+        <div>
+            <input type="submit" value="Connexion">
+        </div>
+    </form>
+</body>
+
+</html>

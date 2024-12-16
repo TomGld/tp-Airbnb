@@ -7,17 +7,31 @@ use Symplefony\Model\Entity;
 
 class User extends Entity
 {
+
+    /**
+     * Rôle admin
+     */
+    public const ROLE_ADMIN = 3;
+    /**
+     * Rôle annonceur
+     */
+    public const ROLE_ANNOUNCER = 2;
+    /**
+     * Rôle client
+     */
+    public const ROLE_CUSTOMER = 1;
+
     protected string $password;
     public function getPassword(): string { return $this->password; }
-    public function setPassword( int $value ): self
+    public function setPassword( string $value ): self
     {
-        $this->id = $value;
+        $this->password = $value;
         return $this; // Permet de "chaîner" les appels aux setters: $toto->setId(2)->setName('toto'), etc.
     }
    
     protected string $email;
     public function getEmail(): string { return $this->email; }
-    public function setEmail( int $value ): self
+    public function setEmail( string $value ): self
     {
         $this->email = $value;
         return $this;
@@ -25,7 +39,7 @@ class User extends Entity
 
     protected string $firstname;
     public function getFirstname(): string { return $this->firstname; }
-    public function setFirstname( int $value ): self
+    public function setFirstname( string $value ): self
     {
         $this->firstname = $value;
         return $this;

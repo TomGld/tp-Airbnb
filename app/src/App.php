@@ -23,6 +23,11 @@ use App\Controller\CategoryController;
 use App\Controller\PageController;
 use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
+use App\Middleware\AnnouncerMiddleware;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\VisitorMiddleware;
+use App\Model\tools\FunctionsSecurity;
+use Symplefony\Security;
 
 final class App
 {
@@ -42,9 +47,22 @@ final class App
         return self::$app_instance;
     }
 
+    /**
+     * Hache une chaîne de caractères en servant du "sel" et du "poivre" définis dans .env
+     *
+     * @param  string $str Chaîne à hacher
+     * 
+     * @return string Résultat
+     */
+    public static function strHash(string $str): string
+    {
+        return Security::strButcher($str, $_ENV['security_salt'], $_ENV['security_pepper']);
+    }
+
     // Démarrage de l'application
     public function start(): void
     {
+        session_start();
         $this->registerRoutes();
         $this->startRouter();
     }
@@ -58,6 +76,34 @@ final class App
     // Enregistrement des routes de l'application
     private function registerRoutes(): void
     {
+
+        // -- Visiteurs (non-connectés) --
+        $visitorAttributes = [
+            Attributes::MIDDLEWARE => [VisitorMiddleware::class]
+        ];
+        $this->router->group($visitorAttributes, function (Router $router) {
+            // Login
+            $router->get('/sign-in', [AuthController::class, 'signIn']);
+            $router->post('/sign-in', [AuthController::class, 'checkCredentials']);
+
+            //Create account
+            $router->get('/sign-up', [UserController::class, 'add']);
+            $router->post('/sign-up/add', [UserController::class, 'create']);
+        });
+
+
+        // -- Utilisateurs connectés (tous rôles) --
+        $authAttributes = [
+            Attributes::MIDDLEWARE => [AuthMiddleware::class]
+        ];
+
+        $this->router->group($authAttributes, function (Router $router) {
+            // Logout
+            $router->get('/sign-out', [AuthController::class, 'signOut']);
+        });
+
+
+
         // -- Formats des paramètres --
         // {id} doit être un nombre
         $this->router->pattern( 'id', '\d+' );
@@ -66,18 +112,17 @@ final class App
         $this->router->get( '/', [ PageController::class, 'index' ] );
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
 
-        $this->router->get( '/users/add', [ UserController::class, 'add' ] );
-        $this->router->post( '/users/add', [ UserController::class, 'create' ] );
+
 
         // Liste
         $this->router->get('/accommodations', [AccommodationController::class, 'index']);
         
-        // TODO: Groupe Visiteurs (non-connectés)
+
 
 
         // -- PAGES ANNOUNCERS --
         $announcerAttributes = [
-            Attributes::PREFIX => '/announcer',            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
+            Attributes::MIDDLEWARE => [AnnouncerMiddleware::class ]
         ];
 
         $this->router->group( $announcerAttributes, function( Router $router ) {
@@ -97,64 +142,6 @@ final class App
 
         });
 
-            // -- Pages USERS --
-            $userAttributes = [
-                Attributes::PREFIX => '/users',
-                Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
-            ];
-            $this->router->group( $userAttributes, function( Router $router ) {
-
-                // -- USER --
-                
-                // Ajout
-                
-            });
-
-        // -- Pages d'admin --
-        $adminAttributes = [
-            Attributes::PREFIX => '/admin',
-            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
-        ];
-
-        $this->router->group( $adminAttributes, function( Router $router ) {
-            $router->get( '', [ AdminController::class, 'dashboard' ]);
-
-            // -- User --
-            // Ajout
-            $router->get( '/users/add', [ UserController::class, 'add' ] );
-            $router->post( '/users', [ UserController::class, 'create' ] );
-            // Liste
-            $router->get( '/users', [ UserController::class, 'index' ]);
-            // Détail
-            $router->get( '/users/{id}', [ UserController::class, 'show' ] );
-            $router->post( '/users/{id}', [ UserController::class, 'update' ] );
-            // Suppression
-            $router->get( '/users/{id}/delete', [ UserController::class, 'delete' ] );
-
-            // -- Category --
-            // Ajout
-            $router->get( '/categories/add', [ CategoryController::class, 'add' ] );
-            $router->post( '/categories', [ CategoryController::class, 'create' ] );
-            // Liste
-            $router->get( '/categories', [ CategoryController::class, 'index' ]);
-            // Détail/modification
-            $router->get( '/categories/{id}', [ CategoryController::class, 'show' ] );
-            $router->post( '/categories/{id}', [ CategoryController::class, 'update' ] );
-            // Suppression
-            $router->get( '/categories/{id}/delete', [ CategoryController::class, 'delete' ] );
-
-            // -- Car --
-            // Ajout
-            $router->get( '/cars/add', [ CarController::class, 'add' ] );
-            $router->post( '/cars', [ CarController::class, 'create' ] );
-            // Liste
-            $router->get( '/cars', [ CarController::class, 'index' ]);
-            // Détail/modification
-            $router->get( '/cars/{id}', [ CarController::class, 'show' ] );
-            $router->post( '/cars/{id}', [ CarController::class, 'update' ] );
-            // Suppression
-            $router->get( '/cars/{id}/delete', [ CarController::class, 'delete' ] );
-        });
     }
 
     // Démarrage du routeur
