@@ -1,3 +1,11 @@
+<?php
+
+use App\Model\Entity\Accommodation;
+use App\Model\Repository\AccommodationRepository;
+use App\Model\Repository\RepoManager;
+
+?>
+
 <div>
     <a href="/announcer">🏠 Retour</a>
 </div>
@@ -6,7 +14,7 @@
     List.phtml "views/accommodation/announcer"
 </p>
 <p>
-    <a href="/announcer/accommodations/add">Ajouter une annonce</a>
+    <a href="/accommodations/add">Ajouter une annonce</a>
 </p>
 <div>
     <?php if (!empty($accommodations)) : ?>
@@ -21,8 +29,19 @@
                         <li>Description : <?php echo $accommodation->getDescription() ?></li>
                         <li>Capacité : <?php echo $accommodation->getCapacity() ?></li>
                         <li>Propriétaire : <?php echo $accommodation->getId_owner() ?></li>
-                        <li>Type de bien : <?php echo $accommodation->getId_Type() ?></li>                        
-                        <li>Adresse : <?php echo $accommodation->getId_address() ?></li>
+                        <li>Type de bien : <?php echo $accommodation->getId_Type() ?></li>
+                        <li>ID Adresse : <?php echo $accommodation->getId_address() ?></li>
+                        <div>
+                            <?
+                            // //Récupérer number_street, street, city, country en recherchant par l'id de id_address de la table accommodation
+                            // $repoManager = new RepoManager();
+                            // $accommodationRepository = $repoManager->getAccommodationRepo();
+                            // $address = $accommodationRepository->findAddressById($accommodation->getId_address());
+
+
+
+                            ?>
+                        </div>
                     </ul>
                 </li>
             <?php endforeach ?>

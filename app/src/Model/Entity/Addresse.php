@@ -4,8 +4,31 @@ namespace App\Model\Entity;
 
 use Symplefony\Model\Entity;
 
-class Address extends Entity
+class Addresse extends Entity
 {
+
+    protected string $number_street;
+    /**
+     * Get the value of number_street
+     */ 
+    public function getNumber_street()
+    {
+        return $this->number_street;
+    }
+
+    /**
+     * Set the value of street
+     *
+     * @return  self
+     */ 
+    public function setNumber_street($number_street)
+    {
+        $this->number_street = $number_street;
+
+        return $this;
+    }
+
+
     protected string $street;
         /**
      * Get the value of street

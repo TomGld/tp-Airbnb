@@ -15,8 +15,8 @@ class UserRepository extends Repository
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`email`,`password`,`lastname`,`firstname`,`phone_number`) 
-                VALUES (:email,:password,:lastname,:firstname,:phone_number)',
+                (`email`,`password`,`lastname`,`firstname`,`phone_number`, `id_role`)
+                VALUES (:email,:password,:lastname,:firstname,:phone_number,:id_role)',
             $this->getTableName()
         );
 
@@ -26,7 +26,6 @@ class UserRepository extends Repository
         if( ! $sth ) {
             return null;
         }
-
         $success = $sth->execute($user);
 
         // Si echec de l'insertion

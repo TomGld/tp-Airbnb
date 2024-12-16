@@ -5,7 +5,7 @@ CREATE TABLE `users` (
   `lastname` VARCHAR(50),
   `firstname` VARCHAR(50),
   `phone_number` VARCHAR(15),
-  `id_role` int(2)
+  `id_role` int(5)
 );
 
 CREATE TABLE `accommodations` (

@@ -2,8 +2,7 @@
 
 namespace App\Model\Entity;
 
-use App\Model\Repository\CategoryRepository;
-use App\Model\Repository\RepoManager;
+
 use Symplefony\Model\Entity;
 
 class Accommodation extends Entity
@@ -11,20 +10,7 @@ class Accommodation extends Entity
     //functions avec ses getter and setter :
 
     protected string $title ;
-
-    /**
-     * Get the value of title
-     */ 
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set the value of title
-     *
-     * @return  self
-     */ 
+    public function getTitle(){return $this->title;}
     public function setTitle($title)
     {
         $this->title = $title;

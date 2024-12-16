@@ -46,5 +46,13 @@ class User extends Entity
         $this->phone_number = $value;
         return $this;
     }
+    
+    protected string $role;
+    public function getRole(){ return $this->role; }
+    public function setRole($role)
+    {
+        $this->role = $role;
 
+        return $this;
+    }
 }

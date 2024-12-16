@@ -36,7 +36,7 @@ class AccommodationRepository extends Repository
             'id_type' => $accommodation->getId_type(),
             'id_address' => $accommodation->getId_address()
         ]);
-
+        
         // Si echec de l'insertion
         if( ! $success ) {
             return null;

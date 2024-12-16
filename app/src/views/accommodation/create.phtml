@@ -2,7 +2,7 @@
     <a href="/announcer/accommodations/list">🔙 Retour</a>
 </div>
 <h1>Ajouter un nouvel hébergement</h1>
-<form action="/announcer/accommodations" method="post" novalidate>
+<form action="/accommodations" method="post" novalidate>
     <div>
         <label for="input-title">Titre :</label>
         <input type="text" name="title" id="input-title">
@@ -20,12 +20,27 @@
         <input type="text" name="description" id="input-description">
     </div>
     <div>
-        <label for="input-capacity">Capacité du bien en personne :</label>
-        <input type="number" name="capacity" id="input-dapacity">
+        <label for="input-capacity">Capacité (nombre de personnes) :</label>
+        <input type="number" name="capacity" id="input-capacity">
     </div>
-    
+    <div>
+        <label for="input-number_street">Numéro de voie :</label>
+        <input type="number" name="number_street" id="input-number_street">
+    </div>
+    <div>
+        <label for="input-street">Rue :</label>
+        <input type="text" name="street" id="input-street">
+    </div>
+    <div>
+        <label for="input-city">Ville :</label>
+        <input type="text" name="city" id="input-city">
+    </div>
+    <div>
+        <label for="input-country">Pays :</label>
+        <input type="text" name="country" id="input-country">
+    </div>
 
-    <!-- Insérer une liste déroulante pour sélectionner 1 seule choix récupéré depuis la table "accommodation_types" -->
+    <!-- Type de biens depuis la table "accommodation_types" -->
     <div>
         <label for="select-id_type">Type de bien :</label>
         <select name="id_type" id="select-id_type">
@@ -37,8 +52,15 @@
         </select>
     </div>
 
-            <!-- Liste en case à cocher des éléments possible d'ajouter depuis la table equipment -->
-             
+    <div>
+        <label for="input-id_owner">Owner (temp) :</label>
+        <input type="number" name="id_owner" id="input-id_owner">
+    </div>
+
+
+
+    <!-- Liste en case à cocher des éléments possible d'ajouter depuis la table equipment -->
+
     <div>
         <input type="submit" value="Ajouter">
     </div>

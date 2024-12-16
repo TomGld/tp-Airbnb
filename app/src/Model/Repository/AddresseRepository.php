@@ -4,19 +4,19 @@ namespace App\Model\Repository;
 
 use Symplefony\Model\Repository;
 
-use App\Model\Entity\Address;
+use App\Model\Entity\Addresse;
 
-class AddressRepository extends Repository
+class AddresseRepository extends Repository
 {
     protected function getTableName(): string { return 'addresses'; }
 
     /* Crud: Create */
-    public function create( Address $address ): ?Address
+    public function create( Addresse $address ): ?Addresse
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`city`,`country`) 
-                VALUES (:city,:country)',
+                (`number_street`,`street`,`city`,`country`) 
+                VALUES (:number_street, :street, :city,:country)',
             $this->getTableName()
         );
 
@@ -28,6 +28,8 @@ class AddressRepository extends Repository
         }
 
         $success = $sth->execute([
+            'number_street' => $address->getNumber_street(),
+            'street' => $address->getStreet(),
             'city' => $address->getCity(),
             'country' => $address->getCountry()
         ]);
@@ -46,17 +48,17 @@ class AddressRepository extends Repository
     /* cRud: Read tous les items */
     public function getAll(): array
     {
-        return $this->readAll( Address::class );
+        return $this->readAll( Addresse::class );
     }
 
     /* cRud: Read un item par son id */
-    public function getById( int $id ): ?Address
+    public function getById( int $id ): ?Addresse
     {
-        return $this->readById( Address::class, $id );
+        return $this->readById( Addresse::class, $id );
     }
 
     /* crUd: Update */
-    public function update( Address $address ): ?Address
+    public function update( Addresse $address ): ?Addresse
     {
         $query = sprintf(
             'UPDATE `%s` 

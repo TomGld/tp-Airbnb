@@ -66,7 +66,7 @@ final class App
         $this->router->get( '/', [ PageController::class, 'index' ] );
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
 
-        $this->router->get( '/add', [ UserController::class, 'add' ] );
+        $this->router->get( '/users/add', [ UserController::class, 'add' ] );
         $this->router->post( '/users/add', [ UserController::class, 'create' ] );
         
         // TODO: Groupe Visiteurs (non-connectés)
@@ -74,8 +74,7 @@ final class App
 
         // -- PAGES ANNOUNCERS --
         $announcerAttributes = [
-            Attributes::PREFIX => '/announcer',
-            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
+            Attributes::PREFIX => '/announcer',            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
         ];
 
         $this->router->group( $announcerAttributes, function( Router $router ) {

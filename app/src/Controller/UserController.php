@@ -7,26 +7,13 @@ use Laminas\Diactoros\ServerRequest;
 use Symplefony\Controller;
 use Symplefony\View;
 
-use App\Model\Entity\Address;
+use App\Model\Entity\Addresses;
 use App\Model\Repository\RepoManager;
 use App\Model\Entity\User;
+use App\Model\tools\FunctionsSecurity;
 
 class UserController extends Controller
 {
-    /**
-     * Pages publiques
-     */
-    // Visiteur: Affichage du formulaire de création de compte
-    public function displaySubscribe(): void
-    {
-        $view = new View( 'user:create-account' );
-
-        $data = [
-            'title' => 'Créer mon compte - Autodingo.com'
-        ];
-
-        $view->render( $data );
-    }
 
     // Visiteur: Traitement du formulaire de création de compte
     public function processSubscribe(): void
@@ -51,20 +38,23 @@ class UserController extends Controller
         $view->render( $data );
     }
 
-    // Admin: Traitement du formulaire de création d'un utilisateur
+    // Visiteur: Traitement du formulaire de création d'un utilisateur
     public function create( ServerRequest $request ): void
     {
         $user_data = $request->getParsedBody();
         
+        //Vérification format email avec validEmail
+        // TODO: if
+
 
         $user = [
-            'email' => $user_data['email'],
-            'password' => password_hash( $user_data['password'], PASSWORD_BCRYPT ),
-            'lastname' => $user_data['lastname'],
-            'firstname' => $user_data['firstname'],
-            'phone_number' => $user_data['phone_number'],
+            'email' => FunctionsSecurity::secureData($user_data['email']),
+            'password' => password_hash(FunctionsSecurity::validPassword($user_data['password']), PASSWORD_BCRYPT ),
+            'lastname' => FunctionsSecurity::secureData($user_data['lastname']),
+            'firstname' => FunctionsSecurity::secureData($user_data['firstname']),
+            'phone_number' => FunctionsSecurity::secureData($user_data['phone_number']),
+            'id_role' => FunctionsSecurity::secureData($user_data['role']),
         ];
-
         $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
 
         if( is_null( $user_created ) ) {
