@@ -68,6 +68,9 @@ final class App
 
         $this->router->get( '/users/add', [ UserController::class, 'add' ] );
         $this->router->post( '/users/add', [ UserController::class, 'create' ] );
+
+        // Liste
+        $this->router->get('/accommodations', [AccommodationController::class, 'index']);
         
         // TODO: Groupe Visiteurs (non-connectés)
 
@@ -85,8 +88,7 @@ final class App
             // Ajout
             $router->get( '/accommodations/add', [ AccommodationController::class, 'add' ] );
             $router->post( '/accommodations', [ AccommodationController::class, 'create' ] );
-            // Liste
-            $router->get( '/accommodations', [ AccommodationController::class, 'index' ]);
+
             // Détail
             $router->get( '/accommodations/{id}', [ AccommodationController::class, 'show' ] );
             $router->post( '/accommodations/{id}', [ AccommodationController::class, 'update' ] );
