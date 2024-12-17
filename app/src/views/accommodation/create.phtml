@@ -52,9 +52,15 @@
         </select>
     </div>
 
-    <div>
+<!--     <div>
         <label for="input-id_owner">Owner (temp) :</label>
         <input type="number" name="id_owner" id="input-id_owner">
+    </div> -->
+    <div>
+            <!-- Prendre l'id de l'user en session pour l'envoyer  -->
+
+        <input type="hidden" name="id_owner" value="<?= $_SESSION['user']->getId() ?>">
+
     </div>
 
 
