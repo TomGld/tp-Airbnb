@@ -2,7 +2,7 @@
 
 namespace App\Model\Entity;
 
-
+use App\Model\Repository\RepoManager;
 use Symplefony\Model\Entity;
 
 class Accommodation extends Entity
@@ -177,7 +177,22 @@ class Accommodation extends Entity
         return $this;
     }
 
+    //Liaisons
+    protected Addresse $address;
+    public function getAddress(): Addresse
+    {
+        if (!isset($this->address)) {
+            $this->address = RepoManager::getRm()->getAddressRepo()->getById($this->id_address);
+        }
 
+        return $this->address;
+    }
+
+    public function setAddress(Addresse $address): self
+    {
+        $this->address = $address;
+        return $this;
+    }
 
 
 }

@@ -14,4 +14,5 @@ final class Session extends AbstractSession
      * Utilisateur connecté
      */
     public const USER = 'USER';
+
 }

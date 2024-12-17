@@ -31,17 +31,7 @@ use App\Model\Repository\RepoManager;
                         <li>Propriétaire : <?php echo $accommodation->getId_owner() ?></li>
                         <li>Type de bien : <?php echo $accommodation->getId_Type() ?></li>
                         <li>ID Adresse : <?php echo $accommodation->getId_address() ?></li>
-                        <div>
-                            <?
-                            // //Récupérer number_street, street, city, country en recherchant par l'id de id_address de la table accommodation
-                            // $repoManager = new RepoManager();
-                            // $accommodationRepository = $repoManager->getAccommodationRepo();
-                            // $address = $accommodationRepository->findAddressById($accommodation->getId_address());
 
-
-
-                            ?>
-                        </div>
                     </ul>
                 </li>
             <?php endforeach ?>

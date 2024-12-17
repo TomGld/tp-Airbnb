@@ -160,4 +160,6 @@ class AuthController extends Controller
         Session::remove(Session::USER);
         $this->redirect('/');
     }
+
+
 }

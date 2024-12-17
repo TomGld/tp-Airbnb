@@ -38,10 +38,19 @@ class UserController extends Controller
         $isValidPassword = FunctionsSecurity::validPassword($user_data['password']);
         $isvalidEmail = FunctionsSecurity::validEmail($user_data['email']);
 
+        if(!$isvalidEmail)
+        {
+            //TODO: traiter l'erreur
+            $this->redirect('/sign-up?msg=Email invalide');
+
+        }
+        
         if(!$isValidPassword)
         {
             //TODO: traiter l'erreur
-        }    
+            $this->redirect('/sign-up?msg=Mot de passe au format incorrect');
+        }
+
 
         $user = [
             'email' => ($user_data['email']),
