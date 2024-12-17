@@ -15,8 +15,8 @@ class UserRepository extends Repository
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`email`,`password`,`lastname`,`firstname`,`phone_number`, `id_role`)
-                VALUES (:email,:password,:lastname,:firstname,:phone_number,:id_role)',
+                (`email`,`password`,`lastname`,`firstname`,`phone_number`, `role`)
+                VALUES (:email,:password,:lastname,:firstname,:phone_number,:role)',
             $this->getTableName()
         );
 

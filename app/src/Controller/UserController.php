@@ -58,7 +58,7 @@ class UserController extends Controller
             'lastname' => FunctionsSecurity::secureData($user_data['lastname']),
             'firstname' => FunctionsSecurity::secureData($user_data['firstname']),
             'phone_number' => FunctionsSecurity::secureData($user_data['phone_number']),
-            'id_role' => FunctionsSecurity::secureData($user_data['role']),
+            'role' => FunctionsSecurity::secureData($user_data['role']),
         ];
         $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
 

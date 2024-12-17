@@ -61,7 +61,7 @@ class User extends Entity
         return $this;
     }
     
-    protected string $role;
+    protected int $role;
     public function getRole(){ return $this->role; }
     public function setRole($role)
     {

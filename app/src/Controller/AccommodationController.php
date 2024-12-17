@@ -16,7 +16,7 @@ class AccommodationController extends Controller
      * Pages Administrateur
      */
 
-    // Admin: Affichage du formulaire de création d'un utilisateur
+    // Annoncer: Affichage du formulaire de création d'un bien
     public function add(): void
     {
         $view = new View( 'accommodation:create' );
@@ -32,7 +32,7 @@ class AccommodationController extends Controller
 
 
 
-    // Admin: Liste
+    // Annoncer: Liste
     public function index(): void
     {
         $view = new View( 'accommodation:list' );
@@ -50,9 +50,15 @@ class AccommodationController extends Controller
     {
         $accommodation_data = $request->getParsedBody();
 
+        // Traitement de number_street
+        $nbrst = $accommodation_data['number_street'];
+        if ($nbrst instanceof string && empty($nbrst)) {
+            $accommodation_data['number_street'] = null;
+        }
+
         //Création de l'adresse
         $address_data = new Addresse([
-            'number_street' => $accommodation_data['number_street'],
+            'number_street' => $nbrst,
             'street' => $accommodation_data['street'],
             'city' => $accommodation_data['city'],
             'country' => $accommodation_data['country']
