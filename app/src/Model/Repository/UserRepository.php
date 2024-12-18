@@ -50,34 +50,7 @@ class UserRepository extends Repository
     }
 
 
-    /* cruD: Delete */
-    public function deleteOne(int $id): bool
-    {
-        // On récupère l'user pour pouvoir connaîre son address_id 
-        $user = $this->getById( $id );
 
-        if( is_null( $user ) ) {
-            return false;
-        }
-
-        $addressRepo = RepoManager::getRM()->getAddressRepo();
-        // On récupère l'addresse
-        $address = $addressRepo->getById( $user->getAddressId() );
-
-        if( is_null( $address ) ) {
-            return false;
-        }
-
-        // On supprime l'user
-        $success = parent::deleteOne( $id );
-
-        // Si cela a fonctionné, on supprimé l'addresse liée
-        if( $success ) {
-            $success = $addressRepo->deleteOne( $address->getId());
-        }
-
-        return $success;
-    }
 
 
     /**

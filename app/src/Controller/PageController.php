@@ -17,7 +17,7 @@ class PageController extends Controller
         $view = new View( 'page:home' );
 
         $data = [
-            'title' => 'Accueil - Autodingo.com'
+            'title' => 'Accueil - Airbnb.com'
         ];
 
         $view->render( $data );
@@ -26,8 +26,13 @@ class PageController extends Controller
     // Page mentions légales
     public function legalNotice(): void
     {
-        echo 'Les mentions légales !';
 
-        var_dump( UserModel::getById(4) );
+        $view = new View( 'page:legal_notice' );
+
+        $data = [
+            'title' => 'Mentions-légales - Airbnb.com'
+        ];
+
+        $view->render($data);
     }
 }

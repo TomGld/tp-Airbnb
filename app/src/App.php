@@ -25,6 +25,7 @@ use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
 use App\Middleware\AnnouncerMiddleware;
 use App\Middleware\AuthMiddleware;
+use App\Middleware\Customer_VisitorMiddleware;
 use App\Middleware\VisitorMiddleware;
 use App\Model\tools\FunctionsSecurity;
 use Symplefony\Security;
@@ -76,6 +77,12 @@ final class App
     // Enregistrement des routes de l'application
     private function registerRoutes(): void
     {
+        //Pages COMMUNES
+        // Accueil
+        $this->router->get('/', [PageController::class, 'index']);
+        // Contact
+        $this->router->get('/mentions-legales', [PageController::class, 'legalNotice']);
+
 
         // -- Visiteurs (non-connectés) --
         $visitorAttributes = [
@@ -98,23 +105,24 @@ final class App
         ];
 
         $this->router->group($authAttributes, function (Router $router) {
+
             // Logout
             $router->get('/sign-out', [AuthController::class, 'signOut']);
         });
 
+        //Visitor & Customer
+        $visitorCustomerAttributes = [
+            Attributes::MIDDLEWARE => [Customer_VisitorMiddleware::class]
+        ];
+        $this->router->group($visitorCustomerAttributes, function (Router $router) {
+            // -- Pages de visiteur et client --
 
-        // -- Formats des paramètres --
-        // {id} doit être un nombre
-        $this->router->pattern( 'id', '\d+' );
-
-        // -- Pages communes --
-        $this->router->get( '/', [ PageController::class, 'index' ] );
-        $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
-
-
-
-        // Liste
-        $this->router->get('/accommodations', [AccommodationController::class, 'index']);
+            // -- Accommodation --
+            // Liste
+            $router->get('/accommodations', [AccommodationController::class, 'index']);
+            // Détail
+            $router->get('/accommodations/{id}', [AccommodationController::class, 'show']);
+        });
         
 
 
@@ -126,7 +134,6 @@ final class App
 
         $this->router->group( $announcerAttributes, function( Router $router ) {
             // -- Pages d'annonceur --
-            $router->get( '', [ AccommodationController::class, 'index' ]);
 
             // -- Accommodation --
             // Ajout

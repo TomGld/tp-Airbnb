@@ -23,7 +23,7 @@ class AccommodationController extends Controller
         $accommodation_types = RepoManager::getRM()->getAccommodationTypeRepo()->getAll();
 
         $data = [
-            'title' => 'Ajouter un bien',
+            'title' => 'Ajouter un bien - airbnb',
             'accommodation_types' => $accommodation_types
         ];
         

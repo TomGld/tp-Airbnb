@@ -1,5 +1,5 @@
 #!/usr/bin/sh
-FILE=/root/${MYSQL_DATABASE}.sql
+FILE=/adminLIDEM/${MYSQL_DATABASE}.sql
 if [ -f $FILE ]; then
     rm $FILE 
 fi

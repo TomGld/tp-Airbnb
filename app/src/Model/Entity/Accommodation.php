@@ -189,6 +189,8 @@ class Accommodation extends Entity
         return $this->address;
     }
 
+
+
     public function setAddress(Addresse $address): self
     {
         $this->address = $address;

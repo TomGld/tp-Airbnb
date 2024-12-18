@@ -22,7 +22,7 @@ class UserController extends Controller
         $view = new View('user:create_account', auth_controller: AuthController::class);
 
         $data = [
-            'title' => 'Créer mon compte - Autodingo.com'
+            'title' => 'Créer mon compte - Airbnb.com'
         ];
 
         $view->render($data);
@@ -83,38 +83,4 @@ class UserController extends Controller
         $view->render( $data );
     }
 
-    // Admin: Détail
-    public function show( int $id ): void
-    {
-        $view = new View( 'user:admin:details' );
-
-        $user = RepoManager::getRM()->getUserRepo()->getById( $id );
-
-        // Si l'utilisateur demandé n'existe pas
-        if( is_null( $user ) ) {
-            View::renderError( 404 );
-            return;
-        }
-
-        $data = [
-            'title' => 'Utilisateur: '. $user->getEmail(),
-            'user' => $user
-        ];
-
-        $view->render( $data );
-    }
-
-
-    // Admin: Suppression
-    public function delete( int $id ): void
-    {
-        $delete_success = RepoManager::getRM()->getUserRepo()->deleteOne( $id );
-
-        if( ! $delete_success ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/admin/users/'. $id );
-        }
-
-        $this->redirect( '/admin/users' );
-    }
 }

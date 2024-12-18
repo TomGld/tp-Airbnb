@@ -129,7 +129,7 @@ class AuthController extends Controller
 
         // Si échec
         if (is_null($user)) {
-            $this->redirect('/sign-in?error=User null');
+            $this->redirect('/sign-in?error=Identifiants invalides');
         }
 
         // Vérifiez que l'objet $user contient les informations nécessaires
