@@ -1,5 +1,5 @@
 <div>
-    <a href="/announcer/accommodations/list">🔙 Retour</a>
+    <a href="/accommodations">🔙 Retour</a>
 </div>
 <h1>Ajouter un nouvel hébergement</h1>
 <form action="/accommodations" method="post" novalidate>
@@ -51,13 +51,10 @@
             <?php endforeach; ?>
         </select>
     </div>
-
-<!--     <div>
-        <label for="input-id_owner">Owner (temp) :</label>
-        <input type="number" name="id_owner" id="input-id_owner">
-    </div> -->
+    
+    <!-- Prendre l'id de l'user en session pour l'envoyer  -->
     <div>
-            <!-- Prendre l'id de l'user en session pour l'envoyer  -->
+
 
         <input type="hidden" name="id_owner" value="<?= $_SESSION['user']->getId() ?>">
 

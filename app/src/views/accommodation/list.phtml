@@ -22,18 +22,17 @@ use App\Model\Repository\RepoManager;
             <?php foreach ($accommodations as $accommodation): ?>
                 <li>
                     <ul>
-                        <li>id : <?php echo $accommodation->getId() ?></li>
                         <li>titre : <?php echo $accommodation->getTitle() ?></li>
-                        <li>prix : <?php echo $accommodation->getPrice() ?></li>
-                        <li>Surface : <?php echo $accommodation->getSurface() ?></li>
+                        <li>prix : <?php echo $accommodation->getPrice() ?> €</li>
+                        <li>Surface : <?php echo $accommodation->getSurface() ?> m²</li>
                         <li>Description : <?php echo $accommodation->getDescription() ?></li>
-                        <li>Capacité : <?php echo $accommodation->getCapacity() ?></li>
-                        <li>Propriétaire : <?php echo $accommodation->getId_owner() ?></li>
-                        <li>Type de bien : <?php echo $accommodation->getId_Type() ?></li>
-                        <li>ID Adresse : <?php echo $accommodation->getId_address() ?></li>
-                        <!-- 
-                            <li>INFOS TABLE ADDRESS : <?php // echo $accommodation->getAddress()->getNumber_street() ?></li>
-                        -->
+                        <li>Capacité : <?php echo $accommodation->getCapacity() ?> voyageur(s)</li>
+                        <li>Propriétaire : <?php printf($accommodation->getOwner()->getFirstname() . ' ' . $accommodation->getOwner()->getLastname()) ?></li>
+                        <li>Type de bien : <?php echo $accommodation->getType()->getLabel() ?></li>
+                        <li>Rue : <?php echo $accommodation->getAddress()->getStreet() ?></li>
+                        <li>Ville : <?php echo $accommodation->getAddress()->getCity() ?></li>
+                        <li>Pays : <?php echo $accommodation->getAddress()->getCountry() ?></li>
+
 
                     </ul>
                 </li>

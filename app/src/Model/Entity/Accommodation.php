@@ -178,6 +178,7 @@ class Accommodation extends Entity
     }
 
     //Liaisons
+    //Liaison avec la table address
     protected Addresse $address;
     public function getAddress(): Addresse
     {
@@ -192,6 +193,28 @@ class Accommodation extends Entity
     {
         $this->address = $address;
         return $this;
+    }
+
+    //Liaison avec la table user
+    protected User $owner;
+    public function getOwner(): User
+    {
+        if (!isset($this->owner)) {
+            $this->owner = RepoManager::getRm()->getUserRepo()->getById($this->id_owner);
+        }
+
+        return $this->owner;
+    }
+
+    //Liaison avec la table type
+    protected AccommodationType $type;
+    public function getType(): AccommodationType
+    {
+        if (!isset($this->type)) {
+            $this->type = RepoManager::getRm()->getAccommodationTypeRepo()->getById($this->id_type);
+        }
+
+        return $this->type;
     }
 
 

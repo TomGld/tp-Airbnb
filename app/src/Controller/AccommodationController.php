@@ -37,9 +37,16 @@ class AccommodationController extends Controller
     {
         $view = new View( 'accommodation:list' );
 
+        $accommodations = RepoManager::getRM()->getAccommodationRepo()->getAll();
+
+        foreach ($accommodations as $accommodation) {
+            $accommodation->setAddress(RepoManager::getRM()->getAddressRepo()->getById($accommodation->getId_address()));
+        }
+
+
         $data = [
             'title' => 'Liste des locations',
-            'accommodations' => RepoManager::getRM()->getAccommodationRepo()->getAll()
+            'accommodations' => $accommodations
         ];
         $view->render( $data );
     }
@@ -50,15 +57,14 @@ class AccommodationController extends Controller
     {
         $accommodation_data = $request->getParsedBody();
 
-        // Traitement de number_street
-        $nbrst = $accommodation_data['number_street'];
-        if ($nbrst instanceof string && empty($nbrst)) {
-            $accommodation_data['number_street'] = null;
+
+        if (empty($accommodation_data["number_street"])) {
+            $accommodation_data["number_street"] = null;
         }
 
         //Création de l'adresse
         $address_data = new Addresse([
-            'number_street' => $nbrst,
+            'number_street' => $accommodation_data,
             'street' => $accommodation_data['street'],
             'city' => $accommodation_data['city'],
             'country' => $accommodation_data['country']

@@ -7,7 +7,7 @@ use Symplefony\Model\Entity;
 class Addresse extends Entity
 {
 
-    protected string $number_street;
+    protected ?int $number_street;
     /**
      * Get the value of number_street
      */ 
