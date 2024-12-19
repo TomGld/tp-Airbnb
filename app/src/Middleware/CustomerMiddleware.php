@@ -8,7 +8,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Symplefony\IMiddleware;
 
-class AdminMiddleware implements IMiddleware
+class CustomerMiddleware implements IMiddleware
 {
     public function handle( ServerRequestInterface $request, Closure $next ): mixed
     {

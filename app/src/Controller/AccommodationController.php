@@ -103,6 +103,30 @@ class AccommodationController extends Controller
 
     }
 
+    //Function pour afficher les détails d'un bien en particulier
+    public function showAccommodation(int $id): void
+    {
+        $view = new View('accommodation:details');
+
+        $accommodation = RepoManager::getRM()->getAccommodationRepo()->getById($id);
+
+        //Si l'accommodation n'existe pas
+        if(is_null($accommodation)){
+            View::renderError(404);
+            return;
+        }
+
+        //Récupérer l'adresse de l'accommodation
+        $accommodation->setAddress(RepoManager::getRM()->getAddressRepo()->getById($accommodation->getId_address()));
+
+        $data = [
+            'title' => 'Détails du bien',
+            'accommodation' => $accommodation
+        ];
+
+        $view->render($data);
+    }
+
 
 
 }

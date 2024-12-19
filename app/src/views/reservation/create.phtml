@@ -1,0 +1,49 @@
+<?php
+
+use App\Model\Repository\RepoManager;
+
+?>
+<div>
+    <a href="/reservations">🔙 Retour</a>
+</div>
+<h1>Créer une réservation</h1>
+
+<div class="container-body">
+
+    <!-- formulaire de réservation d'un bien-->
+    <form action="/reservations" method="post">
+        <fieldset>
+            <div><!-- Titre de l'annonce --></div>
+            <div>
+                <label for="dateStart">Date de d'arrivée :</label>
+                <input type="datetime" name="dateFrom" id="dateFrom">
+            </div>
+            <div>
+                <label for="dateEnd">Date de départ :</label>
+                <input type="datetime" name="dateTo" id="dateTo">
+            </div>
+            <div>
+                <label for="rental">Location :</label>
+                <?php $rentals = RepoManager::getRM()->getAccommodationRepo()->getAll(); ?>
+                <select name="rental_id" id="rental">
+                    <?php if (isset($_GET['id'])) { //TODO: sécuriser le $_GET
+                        foreach ($accommodations as $accommodation) {
+                            if ($rental->getId() == $_GET['id']) {
+                                echo "<option value='" . $accommodation->getId() . "' selected>" . $accommodation->getTitle() . "</option>";
+                            } else {
+                                echo "<option value='" . $accommodation->getId() . "'>" . $accommodation->getTitle() . "</option>";
+                            }
+                        }
+                    } else {
+                        foreach ($accommodations as $accommodation):
+                            echo "<option value='" . $accommodation->getId() . "'>" . $accommodation->getTitle() . "</option>";
+                        endforeach;
+                    } ?>
+                </select>
+            </div>
+        </fieldset>
+        <div class="button">
+            <button type="submit">Réserver</button>
+        </div>
+    </form>
+</div>

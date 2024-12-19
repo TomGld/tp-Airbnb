@@ -20,7 +20,7 @@ CREATE TABLE `accommodations` (
   `id_address` int
 );
 
-CREATE TABLE `rentals` (
+CREATE TABLE `reservation` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_accommodation` INTEGER,
   `id_customer` INTEGER,
@@ -60,8 +60,8 @@ ALTER TABLE `accommodations_equipment` ADD FOREIGN KEY (`id_accommodation`) REFE
 
 ALTER TABLE `accommodations_equipment` ADD FOREIGN KEY (`id_equipment`) REFERENCES `equipments` (`id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`id_accommodation`) REFERENCES `accommodations` (`id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`id_accommodation`) REFERENCES `accommodations` (`id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`id_customer`) REFERENCES `users` (`id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`id_customer`) REFERENCES `users` (`id`);
 
 ALTER TABLE `accommodations` ADD FOREIGN KEY (`id_type`) REFERENCES `accommodation_types` (`id`);

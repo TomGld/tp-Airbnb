@@ -21,12 +21,14 @@ use App\Controller\AuthController;
 use App\Controller\CarController;
 use App\Controller\CategoryController;
 use App\Controller\PageController;
+use App\Controller\ReservationController;
 use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
 use App\Middleware\AnnouncerMiddleware;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\Customer_VisitorMiddleware;
 use App\Middleware\VisitorMiddleware;
+use App\Middleware\CustomerMiddleware;
 use App\Model\tools\FunctionsSecurity;
 use Symplefony\Security;
 
@@ -82,6 +84,8 @@ final class App
         $this->router->get('/', [PageController::class, 'index']);
         // Contact
         $this->router->get('/mentions-legales', [PageController::class, 'legalNotice']);
+        // Détail
+        $this->router->get( '/accommodations/{id}', [ AccommodationController::class, 'showAccommodation' ] );
 
 
         // -- Visiteurs (non-connectés) --
@@ -121,11 +125,25 @@ final class App
             // Liste
             $router->get('/accommodations', [AccommodationController::class, 'index']);
             // Détail
-            // $router->get('/accommodations/{id}', [AccommodationController::class, 'show']);
+
         });
+
         
 
+        // -- PAGES customer
+        $customerAttributes = [
+            Attributes::MIDDLEWARE => [CustomerMiddleware::class]
+        ];
+        $this->router->group($customerAttributes, function (Router $router) {
+            // -- Pages de client --
 
+            // -- Reservation --
+            // Liste
+            $router->get('/reservations', [ReservationController::class, 'index']);
+            // Ajout
+             $router->get('/reservations/add', [ReservationController::class, 'add']);
+             $router->post('/reservations', [ReservationController::class, 'create']);
+        });
 
         // -- PAGES ANNOUNCERS --
         $announcerAttributes = [
@@ -140,11 +158,6 @@ final class App
             $router->get( '/accommodations/add', [ AccommodationController::class, 'add' ] );
             $router->post( '/accommodations', [ AccommodationController::class, 'create' ] );
 
-            // Détail
-            // $router->get( '/accommodations/{id}', [ AccommodationController::class, 'show' ] );
-            $router->post( '/accommodations/{id}', [ AccommodationController::class, 'update' ] );
-            // Suppression
-            $router->get( '/accommodations/{id}/delete', [ AccommodationController::class, 'delete' ] );
 
         });
 
