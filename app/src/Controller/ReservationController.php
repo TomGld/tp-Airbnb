@@ -63,5 +63,28 @@ class ReservationController extends Controller
     }
 
 
+    //Function pour afficher les détails d'un bien en particulier
+    public function showReservation(int $id): void
+    {
+        $view = new View('reservation:details');
+
+        $reservation = RepoManager::getRM()->getReservationRepo()->getById($id);
+
+        //Si l'accommodation n'existe pas
+        if (is_null($reservation)) {
+            View::renderError(404);
+            return;
+        }
+
+        $data = [
+            'title' => 'Détails du bien',
+            'reservation' => $reservation
+        ];
+
+        $view->render($data);
+    }
+
+
+
 
 }

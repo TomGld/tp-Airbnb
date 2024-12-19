@@ -1,7 +1,7 @@
 <div>
     <a href="/reservations">🔙 Retour</a>
 </div>
-    <h1><?php printf('Réservation : %s', $reservation->getTitle()) ?></h1>
+    <h1><?php printf('Réservation du bien : %s', $reservation->getAccommodation()->getTitle()) ?></h1>
     <h2>Détails</h2>
     <div>
         <?php
@@ -11,7 +11,17 @@
 
 
         ?>
-        <li>
+        <?php //Si l'user ayant réservé est le même que celui dans la session alors afficher, sinon afficher le prénom et nom de l'user ayant réservé
+        if ($reservation->getId_customer() == $_SESSION['user']->getId()) {
+            echo "<li>Vous avez réservé ce bien</li>"?>;
+        <li><?php $reservation->getId_accommodation() ?></li>
+        <li><?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
+        <?php } else { ?>
+            <li><?php echo "Réservé par : " . $reservation->getCustomer()->getFirstname() . ' ' . $reservation->getCustomer()->getLastname()?></li>
+            <li><?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
+        <?php }
+        ?>
+
 
 
     </div>

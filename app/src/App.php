@@ -26,6 +26,7 @@ use App\Controller\UserController;
 use App\Middleware\AdminMiddleware;
 use App\Middleware\AnnouncerMiddleware;
 use App\Middleware\AuthMiddleware;
+use App\Middleware\Customer_AnnouncerMiddleware;
 use App\Middleware\Customer_VisitorMiddleware;
 use App\Middleware\VisitorMiddleware;
 use App\Middleware\CustomerMiddleware;
@@ -128,7 +129,6 @@ final class App
 
         });
 
-        
 
         // -- PAGES customer
         $customerAttributes = [
@@ -143,6 +143,18 @@ final class App
             // Ajout
              $router->get('/reservations/add', [ReservationController::class, 'add']);
              $router->post('/reservations', [ReservationController::class, 'create']);
+        });
+
+        // -- PAGES customer & announcer --
+        $customerAnnouncerAttributes = [
+            Attributes::MIDDLEWARE => [Customer_AnnouncerMiddleware::class]
+        ];
+        $this->router->group($customerAnnouncerAttributes, function (Router $router) {
+            // -- Pages de client et annonceur --
+
+            // -- Reservation --
+            // Détail
+            $router->get('/reservations/{id}', [ReservationController::class, 'showReservation']);
         });
 
         // -- PAGES ANNOUNCERS --
