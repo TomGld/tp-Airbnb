@@ -57,18 +57,20 @@ class AccommodationController extends Controller
         $accommodation_data = $request->getParsedBody();
 
 
-        if (empty($accommodation_data["number_street"])) {
-            $accommodation_data["number_street"] = null;
+        // Traitement de number_street
+        $nbrst = $accommodation_data['number_street'];
+        if ($nbrst instanceof string && empty($nbrst)) {
+            $accommodation_data['number_street'] = null;
         }
 
         //Création de l'adresse
         $address_data = new Addresse([
-            'number_street' => $accommodation_data,
+            'number_street' => $nbrst,
             'street' => $accommodation_data['street'],
             'city' => $accommodation_data['city'],
             'country' => $accommodation_data['country']
         ]);
-
+        
 
         $address_created = RepoManager::getRM()->getAddressRepo()->create($address_data);
 
@@ -84,7 +86,7 @@ class AccommodationController extends Controller
             'surface' => $accommodation_data['surface'],
             'description' => $accommodation_data['description'],
             'capacity' => $accommodation_data['capacity'],
-            'id_owner' => FunctionsSecurity::secureData($accommodation_data['id_owner']),
+            'id_owner' => $accommodation_data['id_owner'],
             'id_type' => $accommodation_data['id_type'],
             'id_address' => $address_data->getId()
         ]);
