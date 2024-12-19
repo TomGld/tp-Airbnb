@@ -207,6 +207,11 @@ class Accommodation extends Entity
 
         return $this->owner;
     }
+    public function setOwner(User $owner): self
+    {
+        $this->owner = $owner;
+        return $this;
+    }
 
     //Liaison avec la table type
     protected AccommodationType $type;
@@ -218,6 +223,12 @@ class Accommodation extends Entity
 
         return $this->type;
     }
+    public function setType(AccommodationType $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
 
 
 }

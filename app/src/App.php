@@ -121,7 +121,7 @@ final class App
             // Liste
             $router->get('/accommodations', [AccommodationController::class, 'index']);
             // Détail
-            $router->get('/accommodations/{id}', [AccommodationController::class, 'show']);
+            // $router->get('/accommodations/{id}', [AccommodationController::class, 'show']);
         });
         
 
@@ -141,7 +141,7 @@ final class App
             $router->post( '/accommodations', [ AccommodationController::class, 'create' ] );
 
             // Détail
-            $router->get( '/accommodations/{id}', [ AccommodationController::class, 'show' ] );
+            // $router->get( '/accommodations/{id}', [ AccommodationController::class, 'show' ] );
             $router->post( '/accommodations/{id}', [ AccommodationController::class, 'update' ] );
             // Suppression
             $router->get( '/accommodations/{id}/delete', [ AccommodationController::class, 'delete' ] );

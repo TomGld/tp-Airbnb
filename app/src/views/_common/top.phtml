@@ -6,6 +6,7 @@
 
     <title><?php
 
+use App\Controller\AuthController;
 use App\Session;
 
  echo $title ?></title>
@@ -14,18 +15,26 @@ use App\Session;
     <nav>
         <ul>
             <a href="/">Accueil</a>
-            <a href="/contact">Contact</a>
+            <a href="/mentions-legales">Mentions-légales</a>
         </ul>
         <?php if (isset($_SESSION['user'])): ?>
 
-            <p>Bonjour <?php //AFFICHER LE PRENOM ET NON depuis le tableau user dans session
+            <?php if (AuthController::isAnnouncer())
+            {
+                echo '<a href="/accommodations/add">Créer une annonce</a>';
+                echo '<a href="/accommodations">Mes annonces</a>';
+            } ?>
+
+
+            <p> <?php
             $user = Session::class::get('user');
             echo $user->getFirstname() . ' ' . $user->getLastname();
-            
             ?></p>
+
             <a href="/sign-out" class="deconnexion_top">Déconnexion</a>
         <?php else: ?>
             <a href="sign-up">S'inscrire</a>
             <a href="sign-in">Se connecter</a>
+            <a href="accommodations">Annonces</a>
         <?php endif; ?>
     </nav>

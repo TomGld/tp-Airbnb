@@ -43,7 +43,6 @@ class AccommodationController extends Controller
             $accommodation->setAddress(RepoManager::getRM()->getAddressRepo()->getById($accommodation->getId_address()));
         }
 
-
         $data = [
             'title' => 'Liste des locations',
             'accommodations' => $accommodations

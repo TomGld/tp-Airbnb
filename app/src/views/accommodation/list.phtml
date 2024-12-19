@@ -32,12 +32,10 @@ use App\Model\Repository\RepoManager;
                         <li>Rue : <?php echo $accommodation->getAddress()->getStreet() ?></li>
                         <li>Ville : <?php echo $accommodation->getAddress()->getCity() ?></li>
                         <li>Pays : <?php echo $accommodation->getAddress()->getCountry() ?></li>
-
-
                     </ul>
                 </li>
             <?php endforeach ?>
-        </ul>
+        </ul>  
 </div>
 <?php else: ?>
     <div>Aucune location enregistrée</div>
