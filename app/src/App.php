@@ -85,8 +85,7 @@ final class App
         $this->router->get('/', [PageController::class, 'index']);
         // Contact
         $this->router->get('/mentions-legales', [PageController::class, 'legalNotice']);
-        // Détail
-        $this->router->get( '/accommodations/{id}', [ AccommodationController::class, 'showAccommodation' ] );
+
 
 
         // -- Visiteurs (non-connectés) --
@@ -126,6 +125,7 @@ final class App
             // Liste
             $router->get('/accommodations', [AccommodationController::class, 'index']);
             // Détail
+            $this->router->get('/accommodations/{id}', [AccommodationController::class, 'showAccommodation']);
 
         });
 

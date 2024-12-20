@@ -1,0 +1,20 @@
+
+USERS ( id, firstName, lastName, email, password, phoneNumber, role )
+- id [pk]
+
+ADDRESSES ( id, street, city, country, numberStreet )
+- id [pk]
+
+ACCOMMODATION_TYPES ( id, label )
+- id [pk]
+
+EQUIPMENTS ( id, label )
+- id [pk]
+
+ACCOMMODATIONS ( id, title, price, surface, description, capacity, id_owner, id_type, id_address, #id_owner, #id_type, #id_address )
+- id [pk]
+
+ACCOMMODATIONS_EQUIPMENT ( #id_accommodation, #id_equipment )
+
+RENTALS ( id, id_accommodation, id_customer, date_from, date_to, #id_accommodation, #id_customer )
+- id [pk]

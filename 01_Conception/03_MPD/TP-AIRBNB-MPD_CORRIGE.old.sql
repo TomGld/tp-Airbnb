@@ -1,11 +1,11 @@
 CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `email` VARCHAR(50),
-  `password` VARCHAR(128),
-  `lastname` VARCHAR(50),
-  `firstname` VARCHAR(50),
-  `phone_number` VARCHAR(15),
-  `role` int(5)
+  `email` VARCHAR(50)NOT NULL,
+  `password` VARCHAR(128)NOT NULL,
+  `lastname` VARCHAR(50)NOT NULL,
+  `firstname` VARCHAR(50)NOT NULL,
+  `phone_number` VARCHAR(15)NOT NULL,
+  `role` int(5)NOT NULL
 );
 
 CREATE TABLE `accommodations` (
@@ -20,7 +20,7 @@ CREATE TABLE `accommodations` (
   `id_address` int
 );
 
-CREATE TABLE `rentals` (
+CREATE TABLE `reservation` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_accommodation` INTEGER,
   `id_customer` INTEGER,
@@ -34,8 +34,8 @@ CREATE TABLE `equipments` (
 );
 
 CREATE TABLE `accommodations_equipment` (
-  `id_accommodation` int PRIMARY KEY,
-  `id_equipment` int PRIMARY KEY,
+  `id_accommodation` int,
+  `id_equipment` int,
   PRIMARY KEY (`id_accommodation`, `id_equipment`)
 );
 
@@ -46,10 +46,10 @@ CREATE TABLE `accommodation_types` (
 
 CREATE TABLE `addresses` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `street` VARCHAR(100),
+  `number_street` int(11) NOT NULL,
+  `street` VARCHAR(50),
   `city` VARCHAR(50),
-  `country` VARCHAR(50),
-  `number_street` int(11)
+  `country` VARCHAR(50)
 );
 
 ALTER TABLE `accommodations` ADD FOREIGN KEY (`id_owner`) REFERENCES `users` (`id`);
@@ -60,8 +60,8 @@ ALTER TABLE `accommodations_equipment` ADD FOREIGN KEY (`id_accommodation`) REFE
 
 ALTER TABLE `accommodations_equipment` ADD FOREIGN KEY (`id_equipment`) REFERENCES `equipments` (`id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`id_accommodation`) REFERENCES `accommodations` (`id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`id_accommodation`) REFERENCES `accommodations` (`id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`id_customer`) REFERENCES `users` (`id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`id_customer`) REFERENCES `users` (`id`);
 
 ALTER TABLE `accommodations` ADD FOREIGN KEY (`id_type`) REFERENCES `accommodation_types` (`id`);

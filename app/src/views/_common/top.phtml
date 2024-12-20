@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php
 
-use App\Controller\AuthController;
-use App\Session;
+            use App\Controller\AuthController;
+            use App\Session;
 
- echo $title ?></title>
+            echo $title ?></title>
 </head>
+
 <body>
     <nav>
         <ul>
@@ -18,18 +20,20 @@ use App\Session;
             <a href="/mentions-legales">Mentions-légales</a>
         </ul>
         <?php if (isset($_SESSION['user'])): ?>
+            <?php echo '<a href="/sign-out">Me déconnecter</a>'; ?>
+            <?php echo '<a href="/reservations">Voir mes réservations</a>'; ?>
 
-            <?php if (AuthController::isAnnouncer())
-            {
+
+            <?php if (AuthController::isAnnouncer()) {
                 echo '<a href="/accommodations/add">Créer une annonce</a>';
                 echo '<a href="/accommodations">Mes annonces</a>';
             } ?>
 
 
             <p> <?php
-            $user = Session::class::get('user');
-            echo $user->getFirstname() . ' ' . $user->getLastname();
-            ?></p>
+                $user = Session::class::get('user');
+                echo $user->getFirstname() . ' ' . $user->getLastname();
+                ?></p>
 
             <a href="/sign-out" class="deconnexion_top">Déconnexion</a>
         <?php else: ?>
