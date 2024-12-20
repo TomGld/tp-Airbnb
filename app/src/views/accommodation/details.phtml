@@ -18,7 +18,7 @@
         <li>prix : <?php echo $accommodation->getPrice() ?> €</li>
         <li>Surface : <?php echo $accommodation->getSurface() ?> m²</li>
         <li>Description : <?php echo $accommodation->getDescription() ?></li>
-        <li>Capacité : <?php echo $accommodation->getCapacity() ?> voyageur(s)</li>
+        <li>Capacité : <?php echo $accommodation->getCapacity() ?> couchage(s)</li>
         <li>Propriétaire : <?php printf($accommodation->getOwner()->getFirstname() . ' ' . $accommodation->getOwner()->getLastname()) ?></li>
         <li>Type de bien : <?php echo $accommodation->getType()->getLabel() ?></li>
         <li>Rue : <?php echo $accommodation->getAddress()->getStreet() ?></li>

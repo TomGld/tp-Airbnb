@@ -1,27 +1,53 @@
 <div>
     <a href="/reservations">🔙 Retour</a>
 </div>
-    <h1><?php printf('Réservation du bien : %s', $reservation->getAccommodation()->getTitle()) ?></h1>
-    <h2>Détails</h2>
-    <div>
-        <?php
+<h1><?php
 
+    use App\Model\Entity\Reservation;
 
-        //Afficher les informations du bien en fonction de l'id récupéré dans l'url
+    printf('Réservation du bien : %s', $reservation->getAccommodation()->getTitle()) ?></h1>
 
+<div>
+    <?php //Si l'user ayant réservé est le même que celui dans la session alors afficher les informations de la réservation en tant que locataire
+    if ($reservation->getId_customer() == $_SESSION['user']->getId()) {
 
-        ?>
-        <?php //Si l'user ayant réservé est le même que celui dans la session alors afficher, sinon afficher le prénom et nom de l'user ayant réservé
-        if ($reservation->getId_customer() == $_SESSION['user']->getId()) {
-            echo "<li>Vous avez réservé ce bien</li>"?>;
+    ?><h2><?php echo "Vous avez réservé ce bien" ?></h2>
+
+        <!-- Afficher les informations du bien -->
         <li><?php $reservation->getId_accommodation() ?></li>
-        <li><?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
-        <?php } else { ?>
-            <li><?php echo "Réservé par : " . $reservation->getCustomer()->getFirstname() . ' ' . $reservation->getCustomer()->getLastname()?></li>
-            <li><?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
-        <?php }
-        ?>
+        <li>Du <?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
+        <li>Prix : <?php echo $reservation->getAccommodation()->getPrice() ?> €</li>
+        <li><?php echo $reservation->getAccommodation()->getSurface() ?> m²</li>
+        <li><?php echo $reservation->getAccommodation()->getDescription() ?></li>
+        <li><?php echo $reservation->getAccommodation()->getCapacity() ?> couchage(s)</li>
+        <li>Numéro de rue : <?php echo $reservation->getAccommodation()->getAddress()->getNumber_Street() ?></li>
+        <li>Rue : <?php echo $reservation->getAccommodation()->getAddress()->getStreet() ?></li>
+        <li>Ville : <?php echo $reservation->getAccommodation()->getAddress()->getCity() ?></li>
+        <li>Pays : <?php echo $reservation->getAccommodation()->getAddress()->getCountry() ?></li>
+        <li><?php echo $reservation->getAccommodation()->getOwner()->getFirstname() . ' ' . $reservation->getAccommodation()->getOwner()->getLastname() ?></li>
+
+    <?php }
 
 
+    // Si l'user est le propriétaire de l'annonce alors afficher toutes les réservations ce biens
 
-    </div>
+    elseif ($reservation->getAccommodation()->getOwner()->getId() == $_SESSION['user']->getId()) { ?>
+
+            <h2><?php echo "Le/les réservation(s) concernant ce bien :" ?></h2>
+
+            <!-- Afficher les caractéristiques du bien -->
+            <li>Locataire : <?php printf($reservation->getCustomer()->getFirstname() . ' ' . $reservation->getCustomer()->getLastName()) ?></li>
+            <li>Du <?php printf($reservation->getDateFrom() . ' au ' . $reservation->getDateTo()) ?></li>
+            <li>Prix : <?php echo  $reservation->getAccommodation()->getPrice() ?> €</li>
+            <li>Surface : <?php echo $reservation->getAccommodation()->getSurface() ?> m²</li>
+            <li>Description : <?php echo $reservation->getAccommodation()->getDescription() ?></li>
+            <li>Capacité : <?php echo $reservation->getAccommodation()->getCapacity() ?> couchage(s)</li>
+            <li>Numéro de rue : <?php echo $reservation->getAccommodation()->getAddress()->getNumber_Street() ?></li>
+            <li>Rue : <?php echo $reservation->getAccommodation()->getAddress()->getStreet() ?></li>
+            <li>Ville : <?php echo $reservation->getAccommodation()->getAddress()->getCity() ?></li>
+            <li>Pays : <?php echo $reservation->getAccommodation()->getAddress()->getCountry() ?></li>
+            <li>Propriétaire : <?php echo $reservation->getAccommodation()->getOwner()->getFirstname() . ' ' . $reservation->getAccommodation()->getOwner()->getLastname() ?></li>
+
+    <?php } ?>
+
+</div>

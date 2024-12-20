@@ -138,8 +138,7 @@ final class App
             // -- Pages de client --
 
             // -- Reservation --
-            // Liste
-            $router->get('/reservations', [ReservationController::class, 'index']);
+
             // Ajout
              $router->get('/reservations/add', [ReservationController::class, 'add']);
              $router->post('/reservations', [ReservationController::class, 'create']);
@@ -155,6 +154,8 @@ final class App
             // -- Reservation --
             // Détail
             $router->get('/reservations/{id}', [ReservationController::class, 'showReservation']);
+            // Liste
+            $router->get('/reservations', [ReservationController::class, 'index']);
         });
 
         // -- PAGES ANNOUNCERS --

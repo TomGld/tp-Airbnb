@@ -60,6 +60,7 @@ class AccommodationRepository extends Repository
         return $this->readById( Accommodation::class, $id );
     }
 
+
     /* crUd: Update */
     public function update( Accommodation $accommodation ): ?Accommodation
     {

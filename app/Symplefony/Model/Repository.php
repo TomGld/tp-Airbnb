@@ -83,6 +83,7 @@ abstract class Repository
         return new $class_name( $object_data );
     }
 
+
     /* cruD: Delete un item par son id */
     public function deleteOne( int $id ): bool
     {

@@ -74,4 +74,11 @@ class Reservation extends Entity
         return $this;
     }
 
+    //Récupérer les accommodations du propriétaire quand l'on transmet id_accommodation depuis la réservation
+    public function getCustomerByIdReservation(){
+        return RepoManager::getRM()->getUserRepo()->getById( $this->id_customer );
+    }
+
+    
+
 }

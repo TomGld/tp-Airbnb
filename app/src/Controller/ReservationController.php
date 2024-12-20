@@ -51,13 +51,19 @@ class ReservationController extends Controller
     {
         $view = new View( 'reservation:list' );
 
-        $reservation = RepoManager::getRM()->getReservationRepo()->getAll();
+        $reservations = RepoManager::getRM()->getReservationRepo()->getAll();
+        $reservation = new Reservation($reservations);
+        //set les informations de l'accommodation
+        foreach ($reservation as $res) {
+            $res->setAccommodation(RepoManager::getRM()->getAccommodationRepo()->getById($res->getId_accommodation()));
+        }
+        
 
         $data = [
             'title' => 'Liste des réservations',
-            'reservations' => $reservation
+            'reservation' => $reservation
         ];
-        var_dump($data);
+
 
         $view->render( $data );
     }
